@@ -16,6 +16,37 @@
 
       {% block content %}
       <h1>Stocks portfolio</h1>
+        {% if not change_list.vars %}
+
+        <h1>Stocks portfolio {{ testing|slugify }}</h1>
+        {% endif %}
+
+
+        <table id="table-portfolio" class="table table-hover table-bordered" style="border: 1px solid: #ddd !important;">
+          <thead class="thead">
+            <tr>
+                <th>Manager</th>
+                <th>Client</th>
+                <th>In-time Profit (%)</th>
+                <th>Cash </th>
+                <th>Risk </th>
+                <th>Buying </th>
+                <th>Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+        <tr>
+                <td data-title="Manager">{{ portfolio.employee }}</td>
+                <td data-title="Client">{{ portfolio.owner }}</td>
+                <td data-title="Price">{{ curr_profit|floatformat:2 }}</td>
+                <td data-title="Change">{{ portfolio.current_cash }}</td>
+                <td data-title="Owned">{{ risk_ok }}</td>
+                <td data-title="Bprice">{{ stock.buying_price|floatformat:2 }}</td>
+                <td class="down" data-title="Balance">{{ stock.balance|floatformat:1 }}</td>
+
+            </tr>
+
+
 
       <table id="table" class="table table-hover table-bordered" style="border: 1px solid: #ddd !important;">
           <thead class="thead">
@@ -27,30 +58,30 @@
                 <th>Stocks owned</th>
                 <th>Buying price</th>
                 <th>Balance</th>
-                <th></th>
+                <th>Sell</th>
             </tr>
           </thead>
           <tbody>
             {% for stock in stock_list %}
-            {% with st=stock.symbol  %}
+
             <tr>
                 <td data-title="ID">{{ stock.symbol }}</td>
                 <td data-title="Name">{{ stock.name }}</td>
                 <td data-title="Price">{{ stock.price|floatformat:2 }}</td>
 
-                {% if change_dict.st >= 0 %}
-                    <td class='up' data-title="Change">+{{ change_dict.st }}</td>
+                {% if change_dict|lookup:stock.symbol >= 0 %}
+                    <td class='up' data-title="Change">+{{ change_dict|lookup:stock.symbol|floatformat:2 }}</td>
                 {% else %}
-                    <td class='down' data-title="Change">{{ change_dict.st|floatformat:2 }}</td>
+                    <td class='down' data-title="Change">{{ change_dict|lookup:stock.symbol|floatformat:2 }}</td>
                 {% endif %}
 
                 <td data-title="Owned">{{ stock.stocks_owned }}</td>
                 <td data-title="Bprice">{{ stock.buying_price|floatformat:2 }}</td>
 
-                {% if stock.balance > 0 %}
-                    <td class='up' data-title="Balance">+{{ stock.balance|floatformat:1 }}</td>
+                {% if balance_dict|lookup:stock.symbol > 0 %}
+                    <td class='up' data-title="Balance">+{{ balance_dict|lookup:stock.symbol|floatformat:2 }}</td>
                 {% else %}
-                    <td class="down" data-title="Balance">{{ stock.balance|floatformat:1 }}</td>
+                    <td class="down" data-title="Balance">{{ balance_dict|lookup:stock.symbol|floatformat:2 }}</td>
                 {% endif %}
                 <td data-title="remove" role="button">
                     <form method="post" class="form-horizontal">
@@ -62,7 +93,6 @@
                     </form>
                 </td>
             </tr>
-            {% endwith %}
             {% endfor %}
           </tbody>
         </table>

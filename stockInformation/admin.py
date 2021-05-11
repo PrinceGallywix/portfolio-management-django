@@ -1,12 +1,12 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
-from .models import Client, Stocks, Portfolio, Sector, Manager
+from .models import Client, Stocks, Portfolio, Sector, Managerr
 
 admin.site.register(Client)
 admin.site.register(Stocks)
 admin.site.register(Portfolio)
 admin.site.register(Sector)
-admin.site.register(Manager)
+admin.site.register(Managerr)
 
 
 

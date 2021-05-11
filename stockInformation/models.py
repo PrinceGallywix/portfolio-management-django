@@ -16,31 +16,34 @@ from django.contrib.auth.models import User
     #     return self.symbol, self.name, self.price, self.change
 
 
-
-class Manager(models.Model):
-    id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, related_name='manager', on_delete= models.CASCADE)
-
-    # def __str__(self):
-    #     return self.Manager.name
-
 class Client(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, related_name='client', on_delete= models.CASCADE)
+    client = models.OneToOneField(User, related_name='client', on_delete= models.CASCADE)
     invest_horizon = models.IntegerField("Wanted invest horizon, in months")
 
-    # def __str__(self):
-    #     return self.user.name
+    def __str__(self):
+        return self.client.get_username()
+
+class Managerr(models.Model):
+    id = models.AutoField(primary_key=True)
+    managerr = models.OneToOneField(User, related_name='managerr', on_delete= models.CASCADE)
+
+    def __str__(self):
+        return self.managerr.get_username()
+
 
 class Portfolio(models.Model):
     id = models.AutoField(primary_key=True)
     risk_wanted_types = models.TextChoices("Wanted risk", 'EXTRA BIG IF_NEEDED FEW ZERO')
     risk_wanted = models.CharField(blank= True, choices= risk_wanted_types.choices, max_length= 20)
     current_risk = models.IntegerField("Current risk rate of a portfolio, from 1 to 100")
-    cash_inserted = models.IntegerField("How much an investor brought to company")
+    cash_inserted = models.FloatField("How much an investor brought to company")
     current_cash = models.IntegerField("How much money do portfolio contains")
     owner = models.ForeignKey(Client, verbose_name="Who own this portfolio", on_delete= models.CASCADE)
-    manager = models.ForeignKey(Manager, verbose_name="Who run this portfolio", on_delete= models.CASCADE)
+    employee = models.ForeignKey(Managerr, verbose_name="Who run this portfolio", on_delete= models.CASCADE)
+
+    def __str__(self):
+        return str(self.owner.client.get_username())
 
 class Sector(models.Model):
     id = models.AutoField(primary_key=True)
@@ -72,10 +75,10 @@ class Stocks(models.Model):
     dividend_yield = models.FloatField()
     beta_coef = models.FloatField()
     sector = models.ForeignKey(Sector, on_delete= models.CASCADE)
-    risk_coef = models.IntegerField()
+    risk_coef = models.FloatField()
     stocks_owned = models.IntegerField()
 
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.symbol, self.name, self.buying_price, self.price
+        return '{} {} {} {} {}'.format(self.symbol, self.name, self.buying_price, self.price, self.portfolio)

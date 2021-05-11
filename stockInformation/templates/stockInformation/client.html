@@ -1,0 +1,53 @@
+{% extends 'stockinformation/base.html' %}
+
+    {% block header %}
+
+    <div class="jumbotron">
+      <div class="container">
+        <h1 class="display-3">Investments report</h1>
+        <p>Welcome, {{portfolio.owner}}!</p>
+      </div>
+    </div>
+
+
+    {% endblock %}
+
+    <div class="container">
+
+      {% block content %}
+      <h1>Portfolio information</h1>
+
+
+        <table id="table-portfolio" class="table table-hover table-bordered" style="border: 1px solid: #ddd !important;">
+          <thead class="thead">
+            <tr>
+                <th>Manager</th>
+                <th>In-time Profit (%)</th>
+                <th>Input cash </th>
+                <th>Risk </th>
+                <th>Buying </th>
+                <th>Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+        <tr>
+                <td data-title="Manager">{{ portfolio.employee }}</td>
+            {% if curr_profit >= 0 %}
+                    <td class='up' data-title="Change">+{{ curr_profit|floatformat:2 }}</td>
+                {% else %}
+                    <td class='down' data-title="Change">-{{ curr_profit|floatformat:2 }}</td>
+                {% endif %}
+
+                <td data-title="Change">{{ portfolio.current_cash }}</td>
+                <td data-title="Owned">{{ risk_ok }}</td>
+                <td data-title="Bprice">{{ stock.buying_price|floatformat:2 }}</td>
+                <td class="down" data-title="Balance">{{ stock.balance|floatformat:1 }}</td>
+
+            </tr>
+
+
+
+    {% endblock %}
+    </div>
+
+
