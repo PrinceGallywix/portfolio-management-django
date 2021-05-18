@@ -1,0 +1,169 @@
+{% extends 'stockinformation/base.html' %}
+
+    {% block header %}
+
+    <div class="jumbotron">
+      <div class="container">
+        <h1 class="display-3">Investments portfolio</h1>
+        <p>This is stock portfolio made with python django</p>
+      </div>
+    </div>
+
+
+    {% endblock %}
+
+    <div class="container">
+
+      {% block content %}
+      <h1>Operation report</h1>
+
+      <div id="stock_actions" class="row">
+        <div class="col-sm-6">
+          <h6>Start date: </h6>
+          <form method="post" class="form-inline">
+                        {% csrf_token %}
+                        <div class="block" class="form-group">
+                            <input class="form-control" id="start_date" type="date" name="start_date" placeholder="start_date" value="{{ start_date }}">
+                        </div>
+                        <div class="block" class="form-group">
+                            <input id="form-ok-btn" class="btn btn-outline-primary btn-sm" type="submit" value="Submit">
+                        </div>
+                    </form>
+        </div>
+      </div>
+
+      <table id="table" class="table table-hover table-bordered" style="border: 1px solid: #ddd !important;">
+          <thead class="thead">
+            <tr>
+                <th>Symbol</th>
+                <th>Buying Price</th>
+                <th>Owner</th>
+                <th>Date of buying</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for stock in stock_list_1 %}
+
+            <tr>
+                <td data-title="ID">{{ stock.symbol }}</td>
+                <td data-title="Name">{{ stock.buying_price }}</td>
+                <td data-title="Price">{{ stock.portfolio }}</td>
+                <td data-title="Owned">{{ stock.date_of_buying }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+
+
+
+
+
+
+
+
+
+
+              <h1>Manager report</h1>
+
+      <table id="table" class="table table-hover table-bordered" style="border: 1px solid: #ddd !important;">
+          <thead class="thead">
+            <tr>
+                <th>Symbol</th>
+                <th>Buying Price</th>
+                <th>Owner</th>
+                <th>Date of buying</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for portfolio in portfolio_list %}
+
+            <tr>
+                <td data-title="ID">{{ portfolio.owner }}</td>
+                <td data-title="Name">{{ portfolio.employee}}</td>
+                <td data-title="Price">{{ portfolio.cash_inserted }}</td>
+                {% if  profit_dict|lookup:portfolio.owner >= 0 %}
+                    <td class='up' data-title="Change">+{{ profit_dict|lookup:portfolio.owner|floatformat:2 }}</td>
+                {% else %}
+                    <td class='down' data-title="Change">{{ profit_dict|lookup:portfolio.owner|floatformat:2 }}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <h1>Sector report</h1>
+
+      <div class="stock_actions" class="row">
+        <div class="col-sm-6">
+          <h6>Sector: </h6>
+          <form method="post" class="form-inline">
+                        {% csrf_token %}
+                        <div class="block" class="form-group">
+                            <select name="sector" id="sector" value="{{ sector }}">
+  <option value="Energy">Energy</option>
+  <option value="Materials">Materials</option>
+  <option value="Industrials">Industrials</option>
+  <option value="Consumer Discretionary">Consumer Discretionary</option>
+  <option value="Consumer Staples">Consumer Staples</option>
+  <option value="Health Care">Health Care</option>
+  <option value="Financials">Financials</option>
+  <option value="Information Technology">Information Technology</option>
+  <option value="Telecommunication Services">Telecommunication Services</option>
+  <option value="Utilities">Utilities</option>
+  <option value="Real Estate">Real Estate</option>
+
+</select>
+
+                        </div>
+                        <div class="block" class="form-group">
+                            <input id="form-ok-btn" class="btn btn-outline-primary btn-sm" type="submit" value="Submit">
+                        </div>
+                    </form>
+        </div>
+      </div>
+
+      <table id="table" class="table table-hover table-bordered" style="border: 1px solid: #ddd !important;">
+          <thead class="thead">
+            <tr>
+                <th>Symbol</th>
+                <th>Buying Price</th>
+                <th>Manager</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for stock in stock_list_2 %}
+
+            <tr>
+                <td data-title="ID">{{ stock.symbol }}</td>
+                <td data-title="Name">{{ stock.buying_price }}</td>
+                <td data-title="Price">{{ stock.portfolio.employee }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+
+
+
+
+
+
+
+    {% endblock %}
+    </div>
+
+

@@ -16,10 +16,6 @@
 
       {% block content %}
       <h1>Stocks portfolio</h1>
-        {% if not change_list.vars %}
-
-        <h1>Stocks portfolio {{ testing|slugify }}</h1>
-        {% endif %}
 
 
         <table id="table-portfolio" class="table table-hover table-bordered" style="border: 1px solid: #ddd !important;">
@@ -30,8 +26,7 @@
                 <th>In-time Profit (%)</th>
                 <th>Cash </th>
                 <th>Risk </th>
-                <th>Buying </th>
-                <th>Balance</th>
+
             </tr>
           </thead>
           <tbody>
@@ -41,8 +36,6 @@
                 <td data-title="Price">{{ curr_profit|floatformat:2 }}</td>
                 <td data-title="Change">{{ portfolio.current_cash }}</td>
                 <td data-title="Owned">{{ risk_ok }}</td>
-                <td data-title="Bprice">{{ stock.buying_price|floatformat:2 }}</td>
-                <td class="down" data-title="Balance">{{ stock.balance|floatformat:1 }}</td>
 
             </tr>
 
