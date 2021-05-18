@@ -81,4 +81,4 @@ class Stocks(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
 
     def __str__(self):
-        return '{} {} {} {} {}'.format(self.symbol, self.name, self.buying_price, self.price, self.portfolio)
+        return '{} {} {} {} {} {}'.format(self.symbol, self.name, self.buying_price, self.price, self.portfolio, self.date_of_buying)

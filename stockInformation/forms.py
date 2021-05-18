@@ -19,6 +19,9 @@ class AddStockForm(forms.Form):
     sector = forms.ChoiceField(choices=sector_list)
 
 
+class DateForm(forms.Form):
+    da = forms.DateField(label = 'date')
+
 class RemoveStockForm(forms.Form):
     remove_stock = forms.CharField(label='remove_stock')
 
