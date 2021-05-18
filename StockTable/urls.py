@@ -20,13 +20,14 @@ from django.contrib import admin
 from django.urls import path
 from stockInformation.views import CustomLoginView
 from django.contrib.auth.views import LogoutView
-from stockInformation.views import update_stock_table, clientView
+from stockInformation.views import update_stock_table, clientView, adminView
 
 
 urlpatterns = [
     url(r'^portfolio/', update_stock_table, name='update_stock_table'),
     url(r'client/', clientView, name='client_view'),
     url(r'^admin/', admin.site.urls),
+    url(r'^adminview/', adminView, name = 'adminView'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page = 'login'), name='logout'),
 ]
