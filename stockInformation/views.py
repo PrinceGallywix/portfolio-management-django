@@ -148,6 +148,8 @@ def update_stock_table(request):
                                 'stock_list': stock_list,
                                 'today_date': today_date,
                                 'add_success_message': add_success_message,
+                                'curr_profit': get_profit(p),
+                                'portfolio': p,
                             }
                             return render(request, 'stockInformation/stocks.html', context)
 
@@ -160,6 +162,8 @@ def update_stock_table(request):
                                 'stock_list': stock_list,
                                 'today_date': today_date,
                                 'error_message': error_message,
+                                'curr_profit': get_profit(p),
+                                'portfolio': p,
                             }
                             return render(request, 'stockInformation/stocks.html', context)
 
@@ -170,6 +174,8 @@ def update_stock_table(request):
                             'stock_list': stock_list,
                             'today_date': today_date,
                             'stock_exists_message': stock_exists_message,
+                            'curr_profit': get_profit(p),
+                            'portfolio': p,
                         }
                         return render(request, 'stockInformation/stocks.html', context)
 
@@ -180,6 +186,8 @@ def update_stock_table(request):
                         'stock_list': stock_list,
                         'today_date': today_date,
                         'error_message': error_message,
+                        'portfolio': p,
+                        'curr_profit': get_profit(p),
                     }
                     return render(request, 'stockInformation/stocks.html', context)
 
@@ -190,6 +198,8 @@ def update_stock_table(request):
                     'stock_list': stock_list,
                     'today_date': today_date,
                     'error_message': error_message,
+                    'curr_profit': get_profit(p),
+                    'portfolio': p,
                 }
                 return render(request, 'stockInformation/stocks.html', context)
 
@@ -214,6 +224,8 @@ def update_stock_table(request):
                 'stock_list': stock_list,
                 'today_date': today_date,
                 'delete_success_message': delete_success_message,
+                'curr_profit': get_profit(p),
+                'portfolio': p,
 
             }
             return render(request, 'stockInformation/stocks.html', context)
